@@ -1,0 +1,54 @@
+.tickets {
+  width: 700px;
+  min-width: 700px;
+  margin: 50px auto;
+}
+
+.add-ticket {
+  width: 150px;
+  height: 50px;
+  float: right;
+  margin-bottom: 15px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tickets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tickets-list-item {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tickets-list-item-content {
+  width: 356px;
+  padding: 16px;
+}
+
+.datetime {
+  width: 139px;
+}
+
+.tickets-list-item-btn {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  margin: auto 10px auto 10px;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.icon {
+  margin: auto;
+}
