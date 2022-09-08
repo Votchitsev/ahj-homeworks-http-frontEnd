@@ -101,6 +101,7 @@ form {
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
+  background-color: white;
 }
 
 .ok-btn {

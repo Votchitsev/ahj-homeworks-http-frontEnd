@@ -34,7 +34,7 @@
       <textarea type="textarea" class="input" id="description" name="description"></textarea>
       <div class="btn-container">
         <div class="form-btn cancel-btn">Отмена</div>
-        <div class="form-btn ok-btn">OK</div>
+        <input class="form-btn ok-btn" type="submit" value="OK">
       </div>
   </form>
   <form id="change-ticket">
@@ -45,8 +45,18 @@
       <textarea type="textarea" class="input" id="description" name="description"></textarea>
       <div class="btn-container">
         <div class="form-btn cancel-btn">Отмена</div>
-        <div class="form-btn ok-btn">OK</div>
+        <input class="form-btn ok-btn" type="submit" value="OK">
       </div>
+  </form>
+  <form class="agree">
+    <div class="form-title">Удалить тикет</div>
+    <div class="form-content">
+      Вы уверены, что хотите удалить тикет? Это действие не обратимо.
+    </div>
+    <div class="btn-container">
+      <div class="form-btn cancel-btn">Отмена</div>
+      <input class="form-btn ok-btn" type="submit" value="OK">
+    </div>
   </form>
 </body>
 </html>

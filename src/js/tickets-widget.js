@@ -4,12 +4,15 @@ class Tickets {
     this.addTicketForm = undefined;
     this.addTicketBtn = undefined;
     this.changeTicketForm = undefined;
+    this.agreeForm = undefined;
+    this.deletingElement = undefined;
   }
 
   init() {
     this.addTicketBtn = this.tickets.querySelector('.add-ticket');
     this.addTicketForm = document.querySelector('#add-ticket');
     this.changeTicketForm = document.querySelector('#change-ticket');
+    this.agreeForm = document.querySelector('.agree');
 
     this.addListeners();
   }
@@ -17,6 +20,7 @@ class Tickets {
   addListeners() {
     const addTicketCancelBtn = this.addTicketForm.querySelector('.cancel-btn');
     const changeTicketCancelBtn = this.changeTicketForm.querySelector('.cancel-btn');
+    const agreeCancelBtn = this.agreeForm.querySelector('.cancel-btn');
 
     this.addTicketBtn.addEventListener('click', () => {
       this.addTicketForm.classList.add('active');
@@ -28,6 +32,27 @@ class Tickets {
 
     changeTicketCancelBtn.addEventListener('click', () => {
       this.closeModal(this.changeTicketForm);
+    });
+
+    agreeCancelBtn.addEventListener('click', () => {
+      this.closeModal(this.agreeForm);
+    });
+
+    this.addTicketForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      console.log('add ticket submit');
+      this.closeModal(this.addTicketForm);
+    });
+
+    this.changeTicketForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      console.log('change ticket submit');
+    });
+
+    this.agreeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      console.log('The ticket was deleted');
+      this.closeModal(this.agreeForm);
     });
 
     this.addTicksListeners();
@@ -48,11 +73,12 @@ class Tickets {
 
       changeTicket.addEventListener('click', (e) => {
         e.stopPropagation();
-        console.log('change ticket');
+        this.changeTicketForm.classList.add('active');
       });
 
       removeTicket.addEventListener('click', (e) => {
         e.stopPropagation();
+        this.agreeForm.classList.add('active');
         console.log('Remove ticket');
       });
 
@@ -64,6 +90,7 @@ class Tickets {
 
   closeModal(element) {
     element.classList.remove('active');
+    element.reset();
   }
 }
 
