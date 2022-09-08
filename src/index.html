@@ -26,8 +26,19 @@
       </div>
     </div>
   </section>
-  <form class="create-ticket">
+  <form id="add-ticket">
     <div class="form-title">Добавить тикет</div>
+      <label for="name">Краткое описание</label>
+      <input class="input" type="text" id="name" name="name">
+      <label for="description">Подробное описание</label>
+      <textarea type="textarea" class="input" id="description" name="description"></textarea>
+      <div class="btn-container">
+        <div class="form-btn cancel-btn">Отмена</div>
+        <div class="form-btn ok-btn">OK</div>
+      </div>
+  </form>
+  <form id="change-ticket">
+    <div class="form-title">Изменить тикет</div>
       <label for="name">Краткое описание</label>
       <input class="input" type="text" id="name" name="name">
       <label for="description">Подробное описание</label>
