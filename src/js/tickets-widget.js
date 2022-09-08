@@ -1,3 +1,6 @@
+import request from './API';
+import generateTicket from './generateTicket';
+
 class Tickets {
   constructor(element) {
     this.tickets = element;
@@ -13,6 +16,8 @@ class Tickets {
     this.addTicketForm = document.querySelector('#add-ticket');
     this.changeTicketForm = document.querySelector('#change-ticket');
     this.agreeForm = document.querySelector('.agree');
+
+    this.redrawTickets();
 
     this.addListeners();
   }
@@ -54,8 +59,6 @@ class Tickets {
       console.log('The ticket was deleted');
       this.closeModal(this.agreeForm);
     });
-
-    this.addTicksListeners();
   }
 
   addTicksListeners() {
@@ -88,9 +91,35 @@ class Tickets {
     }
   }
 
+  async redrawTickets() {
+    const ticketsData = await request('allTickets');
+
+    for (let i = 0; i < ticketsData.length; i += 1) {
+      const ticketData = ticketsData[i];
+
+      const ticket = generateTicket(
+        ticketData.id,
+        ticketData.name,
+        this.parseDate(ticketData.created),
+      );
+
+      this.tickets.insertAdjacentHTML('beforeend', ticket);
+
+      this.addTicksListeners();
+    }
+  }
+
   closeModal(element) {
     element.classList.remove('active');
     element.reset();
+  }
+
+  parseDate(datetime) {
+    const date = new Date(datetime);
+    const day = String(date.getDate()).length === 2 ? `${date.getDate()}` : `0${date.getDate()}`;
+    const month = String(date.getMonth()).length === 2 ? `${date.getMonth()}` : `0${date.getMonth()}`;
+
+    return `${day}.${month}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   }
 }
 
