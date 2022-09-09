@@ -8,7 +8,7 @@ class Tickets {
     this.addTicketBtn = undefined;
     this.changeTicketForm = undefined;
     this.agreeForm = undefined;
-    this.deletingElement = undefined;
+    this.choosenTicket = undefined;
   }
 
   init() {
@@ -54,16 +54,23 @@ class Tickets {
       this.closeModal(this.addTicketForm);
     });
 
-    this.changeTicketForm.addEventListener('submit', (e) => {
+    this.changeTicketForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('change ticket submit');
+      const formData = new FormData(this.changeTicketForm);
+      formData.append('id', this.choosenTicket.getAttribute('ticket_id'));
+      const response = await request('changeTicket', formData);
+
+      if (response.ok) {
+        this.redrawTickets();
+      }
+      this.closeModal(this.changeTicketForm);
     });
 
     this.agreeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const response = await request('deleteTicket', this.deletingElement.getAttribute('ticket_id'));
+      const response = await request('deleteTicket', this.choosenTicket.getAttribute('ticket_id'));
 
-      this.deletingElement = undefined;
+      this.choosenTicket = undefined;
 
       if (response.ok) {
         this.redrawTickets();
@@ -89,6 +96,7 @@ class Tickets {
       changeTicket.addEventListener('click', (e) => {
         e.stopPropagation();
         this.changeTicketForm.classList.add('active');
+        this.choosenTicket = e.target.parentNode.parentNode;
       });
 
       removeTicket.addEventListener('click', (e) => {

@@ -38,6 +38,24 @@ async function request(method, data = null) {
     result = response;
   }
 
+  if (method === 'changeTicket') {
+    const response = await fetch(`${BASE_URL}?method=changeTicket`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: data.get('id'),
+        name: data.get('name'),
+        description: data.get('description'),
+      }),
+    });
+
+    result = response;
+  }
+
   return result;
 }
 
