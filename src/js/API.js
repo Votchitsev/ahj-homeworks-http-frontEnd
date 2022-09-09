@@ -22,11 +22,23 @@ async function request(method, data = null) {
       }),
     });
 
-    return response;
+    result = response;
+  }
+
+  if (method === 'deleteTicket') {
+    const response = await fetch(`${BASE_URL}?method=deleteTicket&id=${data}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    result = response;
   }
 
   return result;
 }
-
 
 export default request;

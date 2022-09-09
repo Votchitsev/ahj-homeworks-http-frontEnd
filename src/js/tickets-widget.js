@@ -59,9 +59,16 @@ class Tickets {
       console.log('change ticket submit');
     });
 
-    this.agreeForm.addEventListener('submit', (e) => {
+    this.agreeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('The ticket was deleted');
+      const response = await request('deleteTicket', this.deletingElement.getAttribute('ticket_id'));
+
+      this.deletingElement = undefined;
+
+      if (response.ok) {
+        this.redrawTickets();
+      }
+
       this.closeModal(this.agreeForm);
     });
   }
@@ -87,7 +94,7 @@ class Tickets {
       removeTicket.addEventListener('click', (e) => {
         e.stopPropagation();
         this.agreeForm.classList.add('active');
-        console.log('Remove ticket');
+        this.deletingElement = e.target.parentNode.parentNode;
       });
 
       ticks.item(i).addEventListener('click', () => {
@@ -97,8 +104,13 @@ class Tickets {
   }
 
   async redrawTickets() {
-    const ticketsData = await request('allTickets');
+    const ticketsList = this.tickets.querySelector('.tickets-list');
 
+    while (ticketsList.firstChild) {
+      ticketsList.removeChild(ticketsList.firstChild);
+    }
+
+    const ticketsData = await request('allTickets');
     for (let i = 0; i < ticketsData.length; i += 1) {
       const ticketData = ticketsData[i];
 
@@ -108,7 +120,7 @@ class Tickets {
         this.parseDate(ticketData.created),
       );
 
-      this.tickets.insertAdjacentHTML('beforeend', ticket);
+      ticketsList.insertAdjacentHTML('beforeend', ticket);
 
       this.addTicksListeners();
     }
