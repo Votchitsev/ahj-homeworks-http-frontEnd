@@ -1,4 +1,4 @@
-async function request(method) {
+async function request(method, data = null) {
   const BASE_URL = 'http://localhost:8080/';
   let result;
 
@@ -9,7 +9,24 @@ async function request(method) {
     }
   }
 
+  if (method === 'createTicket') {
+    const response = await fetch(`${BASE_URL}?method=createTicket`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        name: data.get('name'),
+        description: data.get('description'),
+      }),
+    });
+
+    return response;
+  }
+
   return result;
 }
+
 
 export default request;

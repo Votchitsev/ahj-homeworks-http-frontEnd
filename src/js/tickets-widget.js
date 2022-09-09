@@ -43,9 +43,14 @@ class Tickets {
       this.closeModal(this.agreeForm);
     });
 
-    this.addTicketForm.addEventListener('submit', (e) => {
+    this.addTicketForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('add ticket submit');
+      const formData = new FormData(e.target);
+      const response = await request('createTicket', formData);
+
+      if (response.ok) {
+        this.redrawTickets();
+      }
       this.closeModal(this.addTicketForm);
     });
 

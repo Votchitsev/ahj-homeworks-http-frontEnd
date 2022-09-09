@@ -9,27 +9,12 @@
 <body>
   <section class="tickets">
     <button class="add-ticket">add ticket</button>
-    <div class="tickets-list">
-      <div class="tickets-list-item">
-        <div class="tickets-list-item-btn tick"></div>
-        <div class="tickets-list-item-content">
-          <span class="name">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-          <span class="description"></span>
-        </div>
-        <div class="tickets-list-item-content datetime"></div>
-        <div class="tickets-list-item-btn change-ticket">
-          <div class="icon">&#9998;</div>
-        </div>
-        <div class="tickets-list-item-btn remove-ticket">
-          <div class="icon">&#10006;</div>
-        </div>
-      </div>
-    </div>
+    <div class="tickets-list"></div>
   </section>
   <form id="add-ticket">
     <div class="form-title">Добавить тикет</div>
       <label for="name">Краткое описание</label>
-      <input class="input" type="text" id="name" name="name">
+      <input class="input" type="text" id="name" name="name" value="one">
       <label for="description">Подробное описание</label>
       <textarea type="textarea" class="input" id="description" name="description"></textarea>
       <div class="btn-container">
