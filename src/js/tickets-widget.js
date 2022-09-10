@@ -10,6 +10,10 @@ class Tickets {
     this.changeTicketForm = undefined;
     this.agreeForm = undefined;
     this.choosenTicket = undefined;
+
+    this.addTicketSubmit = this.addTicketSubmit.bind(this);
+    this.changeTicketSubmit = this.changeTicketSubmit.bind(this);
+    this.deleteTicketSubmit = this.deleteTicketSubmit.bind(this);
   }
 
   init() {
@@ -44,41 +48,51 @@ class Tickets {
       closeModal(this.agreeForm);
     });
 
-    this.addTicketForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const response = await request('createTicket', formData);
+    this.addTicketForm.addEventListener('submit', this.addTicketSubmit);
 
-      if (response.ok) {
-        this.redrawTickets();
-      }
-      closeModal(this.addTicketForm);
-    });
+    this.changeTicketForm.addEventListener('submit', this.changeTicketSubmit);
 
-    this.changeTicketForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(this.changeTicketForm);
-      formData.append('id', this.choosenTicket.getAttribute('ticket_id'));
-      const response = await request('changeTicket', formData);
+    this.agreeForm.addEventListener('submit', this.deleteTicketSubmit);
+  }
 
-      if (response.ok) {
-        this.redrawTickets();
-      }
-      closeModal(this.changeTicketForm);
-    });
+  async addTicketSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await request('createTicket', formData);
 
-    this.agreeForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const response = await request('deleteTicket', this.choosenTicket.getAttribute('ticket_id'));
+    if (response.ok) {
+      this.redrawTickets();
+    }
+    closeModal(this.addTicketForm);
+  }
 
-      this.choosenTicket = undefined;
+  async changeTicketSubmit(e) {
+    e.preventDefault();
 
-      if (response.ok) {
-        this.redrawTickets();
-      }
+    const formData = new FormData(this.changeTicketForm);
+    formData.append('id', this.choosenTicket.getAttribute('ticket_id'));
 
-      closeModal(this.agreeForm);
-    });
+    const response = await request('changeTicket', formData);
+
+    if (response.ok) {
+      this.redrawTickets();
+    }
+
+    closeModal(this.changeTicketForm);
+  }
+
+  async deleteTicketSubmit(e) {
+    e.preventDefault();
+
+    const response = await request('deleteTicket', this.choosenTicket.getAttribute('ticket_id'));
+
+    this.choosenTicket = undefined;
+
+    if (response.ok) {
+      this.redrawTickets();
+    }
+
+    closeModal(this.agreeForm);
   }
 
   addTicksListeners() {
