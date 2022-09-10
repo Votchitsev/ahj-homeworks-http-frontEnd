@@ -14,7 +14,7 @@ function generateTicket(id, name, datetime) {
       <div class="icon">&#10006;</div>
     </div>
   </div>
-  `
+  `;
 }
 
 export default generateTicket;

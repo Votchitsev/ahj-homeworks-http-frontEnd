@@ -9,6 +9,18 @@ async function request(method, data = null) {
     }
   }
 
+  if (method === 'ticketById') {
+    const response = await fetch(`${BASE_URL}?method=ticketById&id=${data}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+
+    result = response.json();
+  }
+
   if (method === 'createTicket') {
     const response = await fetch(`${BASE_URL}?method=createTicket`, {
       method: 'POST',

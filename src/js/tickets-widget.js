@@ -1,5 +1,6 @@
 import request from './API';
 import generateTicket from './generateTicket';
+import { closeModal, parseDate } from './service';
 
 class Tickets {
   constructor(element) {
@@ -32,15 +33,15 @@ class Tickets {
     });
 
     addTicketCancelBtn.addEventListener('click', () => {
-      this.closeModal(this.addTicketForm);
+      closeModal(this.addTicketForm);
     });
 
     changeTicketCancelBtn.addEventListener('click', () => {
-      this.closeModal(this.changeTicketForm);
+      closeModal(this.changeTicketForm);
     });
 
     agreeCancelBtn.addEventListener('click', () => {
-      this.closeModal(this.agreeForm);
+      closeModal(this.agreeForm);
     });
 
     this.addTicketForm.addEventListener('submit', async (e) => {
@@ -51,7 +52,7 @@ class Tickets {
       if (response.ok) {
         this.redrawTickets();
       }
-      this.closeModal(this.addTicketForm);
+      closeModal(this.addTicketForm);
     });
 
     this.changeTicketForm.addEventListener('submit', async (e) => {
@@ -63,7 +64,7 @@ class Tickets {
       if (response.ok) {
         this.redrawTickets();
       }
-      this.closeModal(this.changeTicketForm);
+      closeModal(this.changeTicketForm);
     });
 
     this.agreeForm.addEventListener('submit', async (e) => {
@@ -76,7 +77,7 @@ class Tickets {
         this.redrawTickets();
       }
 
-      this.closeModal(this.agreeForm);
+      closeModal(this.agreeForm);
     });
   }
 
@@ -111,8 +112,17 @@ class Tickets {
           this.choosenTicket = e.target.closest('.tickets-list-item');
         });
 
-        ticks.item(i).addEventListener('click', () => {
-          console.log('Show description');
+        ticks.item(i).addEventListener('click', async (e) => {
+          const ticket = e.currentTarget.closest('.tickets-list-item');
+          const ticketData = await request('ticketById', ticket.getAttribute('ticket_id'));
+          const description = ticket.querySelector('.description');
+
+          if (description.textContent.length === 0) {
+            description.textContent = ticketData.description;
+            return;
+          }
+
+          description.textContent = '';
         });
 
         ticks.item(i).setAttribute('has_event_listeners', true);
@@ -128,32 +138,20 @@ class Tickets {
     }
 
     const ticketsData = await request('allTickets');
+
     for (let i = 0; i < ticketsData.length; i += 1) {
       const ticketData = ticketsData[i];
 
       const ticket = generateTicket(
         ticketData.id,
         ticketData.name,
-        this.parseDate(ticketData.created),
+        parseDate(ticketData.created),
       );
 
       ticketsList.insertAdjacentHTML('beforeend', ticket);
 
       this.addTicksListeners();
     }
-  }
-
-  closeModal(element) {
-    element.classList.remove('active');
-    element.reset();
-  }
-
-  parseDate(datetime) {
-    const date = new Date(datetime);
-    const day = String(date.getDate()).length === 2 ? `${date.getDate()}` : `0${date.getDate()}`;
-    const month = String(date.getMonth()).length === 2 ? `${date.getMonth()}` : `0${date.getMonth()}`;
-
-    return `${day}.${month}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   }
 }
 

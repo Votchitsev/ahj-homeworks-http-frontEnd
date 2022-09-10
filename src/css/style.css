@@ -54,8 +54,14 @@ form {
 }
 
 .tickets-list-item-content {
+  display: flex;
+  flex-direction: column;
   width: 356px;
   padding: 16px;
+}
+
+.description {
+  margin-top: 10px;
 }
 
 .datetime {
