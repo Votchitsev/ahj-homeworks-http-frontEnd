@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Http</title>
+<script defer src="main.js"></script></head>
+<body>
+  <section class="tickets">
+    <button class="add-ticket">add ticket</button>
+    <div class="tickets-list"></div>
+  </section>
+  <form id="add-ticket">
+    <div class="form-title">Добавить тикет</div>
+      <label for="name">Краткое описание</label>
+      <input class="input" type="text" id="name" name="name">
+      <label for="description">Подробное описание</label>
+      <textarea type="textarea" class="input" id="description" name="description"></textarea>
+      <div class="btn-container">
+        <div class="form-btn cancel-btn">Отмена</div>
+        <input class="form-btn ok-btn" type="submit" value="OK">
+      </div>
+  </form>
+  <form id="change-ticket">
+    <div class="form-title">Изменить тикет</div>
+      <label for="name">Краткое описание</label>
+      <input class="input" type="text" id="name" name="name">
+      <label for="description">Подробное описание</label>
+      <textarea type="textarea" class="input" id="description" name="description"></textarea>
+      <div class="btn-container">
+        <div class="form-btn cancel-btn">Отмена</div>
+        <input class="form-btn ok-btn" type="submit" value="OK">
+      </div>
+  </form>
+  <form class="agree">
+    <div class="form-title">Удалить тикет</div>
+    <div class="form-content">
+      Вы уверены, что хотите удалить тикет? Это действие не обратимо.
+    </div>
+    <div class="btn-container">
+      <div class="form-btn cancel-btn">Отмена</div>
+      <input class="form-btn ok-btn" type="submit" value="OK">
+    </div>
+  </form>
+</body>
+</html>
