@@ -84,30 +84,39 @@ class Tickets {
     const ticks = this.tickets.querySelectorAll('.tickets-list-item');
 
     for (let i = 0; i < ticks.length; i += 1) {
-      const tick = ticks.item(i).querySelector('.tick');
-      const changeTicket = ticks.item(i).querySelector('.change-ticket');
-      const removeTicket = ticks.item(i).querySelector('.remove-ticket');
+      if (!ticks.item(i).getAttribute('has_event_listeners')) {
+        const tick = ticks.item(i).querySelector('.tick');
+        const changeTicket = ticks.item(i).querySelector('.change-ticket');
+        const removeTicket = ticks.item(i).querySelector('.remove-ticket');
 
-      tick.addEventListener('click', (e) => {
-        e.stopPropagation();
-        console.log('Tick');
-      });
+        tick.addEventListener('click', (e) => {
+          e.stopPropagation();
 
-      changeTicket.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.changeTicketForm.classList.add('active');
-        this.choosenTicket = e.target.parentNode.parentNode;
-      });
+          if (e.currentTarget.firstChild) {
+            e.currentTarget.firstChild.remove();
+            return;
+          }
+          e.currentTarget.innerHTML = '<div class="icon">&#10003</div>';
+        });
 
-      removeTicket.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.agreeForm.classList.add('active');
-        this.deletingElement = e.target.parentNode.parentNode;
-      });
+        changeTicket.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.changeTicketForm.classList.add('active');
+          this.choosenTicket = e.target.closest('.tickets-list-item');
+        });
 
-      ticks.item(i).addEventListener('click', () => {
-        console.log('Show description');
-      });
+        removeTicket.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.agreeForm.classList.add('active');
+          this.choosenTicket = e.target.closest('.tickets-list-item');
+        });
+
+        ticks.item(i).addEventListener('click', () => {
+          console.log('Show description');
+        });
+
+        ticks.item(i).setAttribute('has_event_listeners', true);
+      }
     }
   }
 
